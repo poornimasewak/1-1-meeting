@@ -45,48 +45,62 @@ function init(){
 function dayCalendar(UIDate){
     // UIDate is the date that the user is currently investigating, which may not necessarily
     // be the same as today's date
-    
-//    let appointments=studentArray.filter(trial);
-    // console.log(appointments);
-    for(x of studentArray) console.log(trial(x, test));
+    let appointments=studentArray.filter(trial);
+    buildDayCalendar(appointments);
 }
-function trial(student, test){
-    sdate=student.time;
-    console.log(sdate);
-    console.log(sdate.format("LL"));
-    console.log(student.time.format("LL")); 
-    
-    console.log("Studnet: "+student.time.format("LL")); 
+function buildDayCalendar(array){
+    let today=$("<div>").addClass("row");
+    for(student of array){
+        today.append($("<div>").addClass("col-6").text(student.name));
+        today.append($("<div>").addClass("col-6").text(student.time.format("hh:mma")));        
+    }
+    $("#wrapper").append(today);
+}
+
+
+
+
+function trial(student){
+    let test=moment().format("LL");
     return test===student.time.format("LL");
 }
 
-
+//__--==^``''``^==--__--==v,,..,,v==--__--==^``''``^==--__--==v,,..,,v==--__--==^``''
+//__                                                                               ''
+//__ organizeStudents()                                                            ''
+//__ Creates a new object with a .name and a .time, and pushes it into studentArray''
+//__                                                                               ''
+//__--==^``''``^==--__--==v,,..,,v==--__--==^``''``^==--__--==v,,..,,v==--__--==^``''
 function organizeStudents(){
-        // Make some students!
-    // Each student has a name, from our array.
-    // Every 1st student meets at 3:00, every 2nd at 3:15, and every third at 3:30, and then we start over
-    // Every three students we increment the date. If it's a weekend, we advance up to Monday
-    // Thursday is the one exception: only one student on Thursdays!
+    const maxMeetingsPerDay=3;
     let meetingSlot=1;
+
+    // Hugely important--I was setting time=initialDate, but that was a depp copy, so
+    // when I would change the value of time, it also changed the value of initialDate
+    // *That* took a while to debug!!
     let time=moment(initialDate);
-    
-    for(name of studentNameList){
-        console.log(("Time: "+time.format("LLLL")));
-        if(meetingSlot>3){
+
+    for(name of studentNameList){        
+        // Every three students we increment the date.
+        if(meetingSlot>maxMeetingsPerDay){
            time.subtract(45, "minutes");
            time.add(1,"days");
+        //    If it's a weekend, we advance up to Monday
             if(time.format("dddd")==="Saturday") time.add(2,"days");
             meetingSlot=1;
-        }
+        }        
+    // Thursday is the one exception: only one student on Thursdays!
         else if(time.format("dddd")==="Thursday" && meetingSlot>1){
            time.subtract(15, "minutes");
            time.add(1,"day");
             meetingSlot=1;
         }        
-        obj=new Student(name, time);
-        console.log("Adding "+time.format("LLLL"));
+        // Again, we don't want to pass time, because that's a deep copy, which is
+        // being updated throughout this loop. We want a new moment() object *based* on time
+        obj=new Student(name, moment(time));
         studentArray.push(obj);
-       time.add(15, "minutes");
+        // Meetings are fifteen minutes each
+       time.add(15, "minutes");    
         meetingSlot++;
     }
 }

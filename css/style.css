@@ -1,4 +1,9 @@
-/* styles for index.html */
-h1{
-    color:red;
+.dayCalendarPage{
+    width: 50%;
+    border: 1px solid black;
+    margin: auto;
+    padding: 20px;
+    line-height: 2;
+    text-align: center;
+    margin-top: 5%;
 }

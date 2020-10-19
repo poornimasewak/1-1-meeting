@@ -47,13 +47,13 @@ for (let i = 0; i < students.length; i++) {
     var ulEl = $("#list");
     // ulEl.append(`<li>${students[i]}</li>`)
     if(i === 0){
-        ulEl.append(`<li>${students[i]}</li> : 9:15`)
+        ulEl.append(`<li class="list-group-item">${students[i]}</li> : 9:15`)
     }else if(i===1){
-        ulEl.append(`<li>${students[i]}</li> : 3:00`)
+        ulEl.append(`<li class="list-group-item">${students[i]}</li> : 3:00`)
     }else if(i===2){
-        ulEl.append(`<li>${students[i]}</li> : 3:15`)
+        ulEl.append(`<li class="list-group-item">${students[i]}</li> : 3:15`)
     }else if(i===3){
-        ulEl.append(`<li>${students[i]}</li> : 3:30`)
+        ulEl.append(`<li class="list-group-item">${students[i]}</li> : 3:30`)
     }
     
 }
@@ -88,18 +88,20 @@ function test() {
         switch (day) {
             case "Monday":
                 console.log(studentList[18], studentList[19], studentList[20], studentList[21]);
+                display(studentList[18], studentList[19], studentList[20], studentList[21]);
+
                 break;
             case "Tuesday":
-                console.log(studentList[22], studentList[23], studentList[24], studentList[25]);
+                display(studentList[22], studentList[23], studentList[24], studentList[25]);
                 break;
             case "Wednesday":
-                console.log(studentList[26], studentList[27], studentList[28]);
+                display(studentList[26], studentList[27], studentList[28]);
                 break;
             case "Thursday":
-                console.log("open");
+                display(["open"]);
                 break;
             case "Friday":
-                console.log("open");
+                display(["open"]);
                 break;
 
             default:

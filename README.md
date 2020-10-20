@@ -13,4 +13,4 @@ Attribution-ShareAlike 4.0 International
 ## Screenshots
 ![Screenshot](.//images/screenShot1.png)
 
-![Screenshot](./images/screenShot2.png)
+![Screenshot](./images/screenShot2.png) 

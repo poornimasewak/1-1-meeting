@@ -18,7 +18,7 @@ const studentNameList = ['Aaron Ray',
     'John Cushing',
     'Justin Albert',
     'Justin Yocus',
-    'Katie Reid-anderson',
+    'Katie Reid-Anderson',
     'Kevin Miller',
     'Matthew Hiatt',
     'Maxence Jeanty',
@@ -36,74 +36,12 @@ const studentArray=[];
 
 function init(){
     organizeStudents();
-    let calendarFormat="daily";
+    let calendarFormat="monthly";
+    $(window).on("resize", ()=>{if (calendarFormat==="daily") fixStyling();});
+    // If we call dayCalendar, we'll pass it today's date. But for the monthly,
+    // we can use the initialDate
     if(calendarFormat==="daily") dayCalendar(moment());
-    else if(calendarFormat==="monthly") monthCalendar();
-}
-
-function dayCalendar(userDate, e){
-    if(e) e.stopPropagation();
-    console.log("DC: "+userDate.format("LLLL"));
-    // UIDate is the date that the user is currently investigating,(which may not necessarily
-    // be the same as today's date). 
-    // Filter the array to remove everyone that it's meeting on userDate
-    let appointments=studentArray.filter(student =>student.date.format("LL")===userDate.format("LL"));
-    if(appointments.length===0) {appointments=[{date:userDate}]}
-    buildDayCalendar(appointments);
-}
-
-
-
-function buildDayCalendar(array){
-    $("#today .card-body").empty();
-    let today=$("<div>").addClass("row");
-    // The heading is the date of this day, but since we're only getting students who will be meeting
-    // on this day, we can just use array[0].date to make our heading (it's the same for any element)
-    let userDate=array[0].date;
-    today.append($("<div>").addClass("col-12").html("<span class='dayCalendarDate'>"+userDate.format("LL")+"</span>"));
-    let lastMeetingDate=studentArray[(studentArray.length-1)].date;
-    if(userDate.isBefore(initialDate)){
-        today.append($("<div>").addClass("col-12").text("There were no meetings before Octover 19th, 2020."));
-    }
-    else if(userDate.isAfter(lastMeetingDate)){
-        today.append($("<div>").addClass("col-12").text("There are no meetings scheduled after "+lastMeetingDate.format("LLLL")+"."));
-    }
-    else if(userDate.format("dddd")==="Saturday" || userDate.format("dddd")==="Sunday"){
-        today.append($("<div>").addClass("col-12").text("No meetings on the weekend."));
-    }
-    else{
-        for(student of array){
-            today.append($("<div>").addClass("col-6").text(student.name));
-            today.append($("<div>").addClass("col-6").text(student.date.format("hh:mma")));        
-        }
-
-    }
-    // Lots of confusing and ugly code to get all the CSS to line up right.
-    // The tricky bit is that I want #today to be on top, visually, but 
-    // it obscures click events from the other two. So I had to put #today
-    // inside #yesterday. Which means a lot of fiddly css to get it looking right.
-    $("#today .card-body").append(today);
-    let h=$("#today").height();    
-    let t=$("#today").position().top+20;
-    let w=$("#today").width();
-    
-    $("#yesterday").height(h);
-    $("#tomorrow").height(h);
-    $("#yesterday").width(w);
-    $("#tomorrow").width(w);
-    $("#today").width(w);
-    
-    $("#tomorrow").css("top",t);
-    $("#tomorrow").css("left",60);
-    let back=moment(userDate);
-    back=back.subtract(1,"days");
-    let forward=moment(userDate);
-    forward=forward.add(1,"days");
-    $("#tomorrow").off("click");
-    $("#yesterday").off("click");
-    $("#tomorrow").on("click",function(e){dayCalendar(forward,e)});
-    $("#yesterday").on("click",function(e){dayCalendar(back,e)});
- 
+    else if(calendarFormat==="monthly") monthCalendar(moment(initialDate));
 }
 
 

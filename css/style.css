@@ -1,7 +1,7 @@
 #cardWrapper{
     margin:auto;
     margin-top:0;
-    width:75%;
+    /* width:75%; */
 }
 .dayCalendarPage{
     border: 1px solid black;
@@ -26,7 +26,25 @@
     z-index: -3;
     background-color: lightgray;
 }
-.dayCalendarDate{
+.dateHeading{
     font-weight: bold;
-    border-bottom: 5px dashed black;
+    /* border-bottom: 5px dashed black; */
+}
+
+.dayHeader{
+    font-weight: bold;
+    font-size:small;    
+}
+.calendarDay{
+    border:1px solid black;
+    border-radius: 15px;
+}
+.weekend{
+    background-color: lightskyblue;
+}
+.studentList{
+    font-size:small;
+    line-height: 1.4;
+    padding:0px;
+    margin:2px;
 }

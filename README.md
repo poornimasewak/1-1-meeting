@@ -11,6 +11,6 @@ https://b-dionysus.github.io/1-1-meeting/
 Attribution-ShareAlike 4.0 International
 
 ## Screenshots
-![Screenshot](.//images/screenShot1.png)
+![Screenshot](https://github.com/B-Dionysus/1-1-meeting/blob/master/images/screenshot1.PNG)
 
-![Screenshot](./images/screenShot2.png) 
+![Screenshot](https://github.com/B-Dionysus/1-1-meeting/blob/master/images/screenshot2.PNG) 

@@ -83,7 +83,7 @@ switch (day) {
     case "Friday Oct 30th 2020":
         display(...studentList.slice(23, 26))
         break;
-        case "Monday Nov 2nd 2020":
+    case "Monday Nov 2nd 2020":
         display(...studentList.slice(26, 30))
         break;
 

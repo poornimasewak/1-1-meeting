@@ -43,10 +43,12 @@ function init(){
 
 function dayCalendar(userDate, e){
     if(e) e.stopPropagation();
+    console.log("DC: "+userDate.format("LLLL"));
     // UIDate is the date that the user is currently investigating,(which may not necessarily
     // be the same as today's date). 
     // Filter the array to remove everyone that it's meeting on userDate
     let appointments=studentArray.filter(student =>student.date.format("LL")===userDate.format("LL"));
+    if(appointments.length===0) {appointments=[{date:userDate}]}
     buildDayCalendar(appointments);
 }
 
@@ -59,9 +61,22 @@ function buildDayCalendar(array){
     // on this day, we can just use array[0].date to make our heading (it's the same for any element)
     let userDate=array[0].date;
     today.append($("<div>").addClass("col-12").html("<span class='dayCalendarDate'>"+userDate.format("LL")+"</span>"));
-    for(student of array){
-        today.append($("<div>").addClass("col-6").text(student.name));
-        today.append($("<div>").addClass("col-6").text(student.date.format("hh:mma")));        
+    let lastMeetingDate=studentArray[(studentArray.length-1)].date;
+    if(userDate.isBefore(initialDate)){
+        today.append($("<div>").addClass("col-12").text("There were no meetings before Octover 19th, 2020."));
+    }
+    else if(userDate.isAfter(lastMeetingDate)){
+        today.append($("<div>").addClass("col-12").text("There are no meetings scheduled after "+lastMeetingDate.format("LLLL")+"."));
+    }
+    else if(userDate.format("dddd")==="Saturday" || userDate.format("dddd")==="Sunday"){
+        today.append($("<div>").addClass("col-12").text("No meetings on the weekend."));
+    }
+    else{
+        for(student of array){
+            today.append($("<div>").addClass("col-6").text(student.name));
+            today.append($("<div>").addClass("col-6").text(student.date.format("hh:mma")));        
+        }
+
     }
     // Lots of confusing and ugly code to get all the CSS to line up right.
     // The tricky bit is that I want #today to be on top, visually, but 
@@ -80,12 +95,14 @@ function buildDayCalendar(array){
     
     $("#tomorrow").css("top",t);
     $("#tomorrow").css("left",60);
-    let td=userDate.add(1,"days");
-    
+    let back=moment(userDate);
+    back=back.subtract(1,"days");
+    let forward=moment(userDate);
+    forward=forward.add(1,"days");
     $("#tomorrow").off("click");
     $("#yesterday").off("click");
-    $("#tomorrow").on("click",function(e){dayCalendar(userDate.add(1,"days"),e);});
-    $("#yesterday").on("click",function(e){dayCalendar(userDate.subtract(1,"days"),e);});
+    $("#tomorrow").on("click",function(e){dayCalendar(forward,e)});
+    $("#yesterday").on("click",function(e){dayCalendar(back,e)});
  
 }
 

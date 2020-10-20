@@ -1,6 +1,6 @@
 class Student{
-    constructor(name, time){
+    constructor(name, date){
         this.name=name;
-        this.time=time;
+        this.date=date;
     }
 }

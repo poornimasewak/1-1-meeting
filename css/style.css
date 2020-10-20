@@ -1,9 +1,32 @@
+#cardWrapper{
+    margin:auto;
+    margin-top:0;
+    width:50%;
+}
 .dayCalendarPage{
-    width: 50%;
     border: 1px solid black;
     margin: auto;
     padding: 20px;
     line-height: 2;
     text-align: center;
     margin-top: 5%;
+}
+#today{
+    width:50%;
+    z-index:2;
+    left:10px;
+}
+#tomorrow{
+    position: absolute;
+    z-index: -4;
+    background-color: lightskyblue;
+}
+#yesterday{
+    position: absolute;
+    z-index: -3;
+    background-color: lightgray;
+}
+.dayCalendarDate{
+    font-weight: bold;
+    border-bottom: 5px dashed black;
 }

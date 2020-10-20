@@ -1,5 +1,3 @@
-// let moment=require("moment");
-$(("document")).ready(init);
 const initialDate=moment("2020-10-19 15:00", "YYYY-MM-DD HH:mm",true);
 // A list of everyone's name
 const studentNameList = ['Aaron Ray',
@@ -33,11 +31,31 @@ const studentNameList = ['Aaron Ray',
     'Zachary Smelcer'];
 // An array of Student objects
 const studentArray=[];
+// We start out in monthly, as opposed to daily, view
+let calendarFormat="monthly";
+$(("document")).ready(init);
 
 function init(){
     organizeStudents();
-    let calendarFormat="monthly";
+    $('#mode-toggle').bootstrapToggle()
+    // The central card is set to 50% width, and then the other two cards are based on that
+    // width. If the window size changes, the central card width will change, and we will need
+    // to recalculate all of the rest from that point. I'm not sure this is working exaclty right, though.
     $(window).on("resize", ()=>{if (calendarFormat==="daily") fixStyling();});
+
+    $("#change-mode").on("click", function(){
+        if(calendarFormat==="monthly"){
+            calendarFormat="daily";
+            $("#mode-toggle").bootstrapToggle('on');
+            dayCalendar(moment(initialDate));
+        }
+        else{
+            calendarFormat="monthly";
+            $("#mode-toggle").bootstrapToggle('off');
+            monthCalendar();
+        }
+
+    });
     // If we call dayCalendar, we'll pass it today's date. But for the monthly,
     // we can use the initialDate
     if(calendarFormat==="daily") dayCalendar(moment());

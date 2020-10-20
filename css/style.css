@@ -48,3 +48,17 @@
     padding:0px;
     margin:2px;
 }
+
+
+/* For some reason, this wasn't making it to the page
+from bootstrap's css */
+.btn-default {
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+}
+.btn-default.active {
+    color: #333;
+    background-color: #e6e6e6;
+    border-color: #adadad;
+}

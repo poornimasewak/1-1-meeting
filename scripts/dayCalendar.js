@@ -1,5 +1,28 @@
-function dayCalendar(userDate, e){
+function dayCalendar(userDate, e=null){
+    // If we have an event, then we came here from dayCalendar (either the forwward or the backward
+    // buttons). They're all jumbled up, so we should just make sure that none of the other click events
+    // get called by mistake
     if(e) e.stopPropagation();
+    else{
+        // If we don't have an event, then either this is the first time we've loaded the page,
+        // or else we've come from monthCalendar. Either way, we need to set up the basics.
+        $("#cardWrapper").empty();
+        $("#cardWrapper").html(
+            `<div class="card dayCalendarPage" id="yesterday">
+        <div class="card dayCalendarPage" id="today">
+           <div class="card-body" ></div>
+       </div>   
+   <div class="card-body" ></div>
+   <div class="card dayCalendarPage" id="tomorrow">
+       <div class="card-body" ></div>
+   </div>
+   </div>`);
+    }
+
+    console.log("Turning off");
+    calendarFormat="daily";
+ //   $('#mode-toggle').bootstrapToggle('off');
+
     // userDate is the date that the user is currently investigating,(which may not necessarily
     // be the same as today's date). 
     // Filter the array to remove everyone that it's meeting on userDate
